@@ -273,6 +273,43 @@ function adjustsidemenu(notation, chat) {
 		cmenu.setAttribute("hidden", "true");
 		adjustBoardWidth();
 	}
+
+	updateMiniClocks();
+}
+
+/*
+ * The clocks live in the notation panel, so they disappear whenever that panel
+ * is collapsed - which is what happens by default on a phone. Move the two
+ * player boxes into the floating bar below the header while the panel is
+ * hidden, and put them back when it is shown again.
+ *
+ * Moving the elements rather than duplicating them keeps every existing
+ * selector - #player-me-time, .player1-time, .selectplayer - pointing at the
+ * clocks that are actually on screen.
+ */
+function updateMiniClocks(){
+	const rmenu = document.getElementById("rmenu");
+	const bar = document.getElementById("mini-clocks");
+	if(!rmenu || !bar){
+		return;
+	}
+	// Scratch games have no clock, so there is nothing worth floating.
+	const showMini = rmenu.hasAttribute("hidden") && !gameData.is_scratch;
+	if(showMini === !bar.hasAttribute("hidden")){
+		return;
+	}
+	const oppBox = document.getElementById("player-opp").parentElement;
+	const meBox = document.getElementById("player-me").parentElement;
+	if(showMini){
+		bar.appendChild(oppBox);
+		bar.appendChild(meBox);
+		bar.removeAttribute("hidden");
+	}
+	else{
+		bar.setAttribute("hidden", "true");
+		rmenu.insertBefore(oppBox, rmenu.firstChild);
+		rmenu.appendChild(meBox);
+	}
 }
 
 let settingsToggle = false;

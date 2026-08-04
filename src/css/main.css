@@ -273,6 +273,68 @@ a.navitem, div.navitem{
 	position: absolute;
 }
 
+/*
+ * Clocks shown while the notation panel is hidden. The player boxes are moved
+ * in and out of here by updateMiniClocks(), so everything that drives the
+ * clocks - the timers, the name labels and the turn highlight - keeps working
+ * unchanged.
+ */
+#mini-clocks {
+	position: fixed;
+	top: 36px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9;
+	display: flex;
+	align-items: stretch;
+	max-width: calc(100vw - 16px);
+	border: 1px solid var(--primary-border-color);
+	border-top: none;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	background-color: var(--secondary-bg-color);
+}
+
+#mini-clocks[hidden] {
+	display: none;
+}
+
+#mini-clocks #player-me, #mini-clocks #player-opp {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 8px;
+	margin: 4px;
+	white-space: nowrap;
+}
+
+#mini-clocks .player-box + .player-box {
+	border-left: 1px solid var(--primary-border-color);
+}
+
+/* Only the names give way when the bar runs out of room, never the clocks */
+#mini-clocks .player-box {
+	min-width: 0;
+}
+
+#mini-clocks #player-me > div, #mini-clocks #player-opp > div {
+	flex: none;
+	min-width: 0;
+}
+
+#mini-clocks #player-me > .player1-name, #mini-clocks #player-me > .player2-name,
+#mini-clocks #player-opp > .player1-name, #mini-clocks #player-opp > .player2-name {
+	flex: 0 1 auto;
+	max-width: 30vw;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#mini-clocks #player-me-time, #mini-clocks #player-opp-time {
+	font-size: large;
+}
+
 .section-title{
 	padding: 8px 0 8px 0;
 }

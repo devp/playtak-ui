@@ -47,6 +47,30 @@
 	</head>
 
 	<body>
+		<script>
+			/*
+			 * Apply the stored theme before anything is painted, so the landing
+			 * page does not flash white before settings.js runs. That runs on
+			 * document ready, which is well after the landing page is on screen.
+			 */
+			(function () {
+				try {
+					var theme =
+						localStorage.getItem("theme") ||
+						(window.matchMedia("(prefers-color-scheme: dark)").matches
+							? "dark-theme"
+							: null);
+					if (theme === "dark-theme") {
+						document.body.classList.add("dark-theme");
+						document
+							.querySelector('meta[name="theme-color"]')
+							.setAttribute("content", "#191f25");
+					}
+				} catch (e) {
+					/* no stored theme available, fall back to the light theme */
+				}
+			})();
+		</script>
 		<audio id="move-sound">
 			<source src="audio/move.mp3" type="audio/mpeg" />
 			<source src="audio/move.ogg" type="audio/ogg" />
@@ -423,6 +447,13 @@
 				</div>
 			</div>
 		</div>
+
+		<!--
+			While the notation panel is hidden - which is the default on narrow
+			screens - the player boxes above are moved in here so the clocks stay
+			on screen. See updateMiniClocks() in main.js.
+		-->
+		<div id="mini-clocks" hidden></div>
 
 		<div id="chat">
 			<div

@@ -16,6 +16,21 @@
 	overflow-x: hidden;
 }
 
+/*
+ * Dark theme. `dark-theme` is set on the body by the theme setting (see
+ * settings.js), so the landing page follows the same toggle as the rest of
+ * the app. The palette matches the one in main.css.
+ */
+.dark-theme .landing {
+	--primary-color: #7fa8ee;
+	--primary-color-300: #93b6f2;
+	--secondary-font-color: #ffffff;
+	--primary-bg-color: #191f25;
+	--secondary-bg-color: #2f2e2e;
+	--primary-font-color: #c8c8c8;
+	--border-color: #343434;
+}
+
 .landing .landing-wrapper {
 	width: 100vw;
 	height: 100vh;
@@ -239,4 +254,65 @@
 	.landing .landing-wrapper {
 		height: -webkit-fill-available;
 	}
+}
+
+/* Dark theme, part two
+ *
+ * The colour variables at the top of this file cover everything that is
+ * styled through CSS. What is left are the inline SVGs and the background
+ * images, which carry their colours with them, so they have to be dealt
+ * with one by one.
+ */
+
+/*
+ * The board pattern in the header/footer fades out through a white gradient
+ * baked into the SVG, so dark mode needs its own copy of both files.
+ */
+.dark-theme .landing .header {
+	background-image: url(../images/board-top-dark.svg);
+}
+
+.dark-theme .landing .footer {
+	background-image: url(../images/board-bottom-dark.svg);
+}
+
+/* Keep the brand banner and the artwork over the parallax photo as they are */
+.dark-theme .landing .footer-banner {
+	background-color: #35478c;
+}
+
+.dark-theme .landing .parallax {
+	background-image: linear-gradient(0deg, rgb(53 68 136), rgb(25 31 37 / 30%)), url('../images/parallax.jpg');
+}
+
+.dark-theme .landing .parallax svg {
+	fill: var(--secondary-font-color);
+}
+
+/* Playtak logo: black line art on white, so it is inverted wholesale */
+.dark-theme .landing .playtak-logo svg {
+	fill: var(--primary-font-color);
+}
+
+.dark-theme .landing .playtak-logo [fill="#fff"] {
+	fill: var(--primary-bg-color);
+}
+
+.dark-theme .landing .playtak-logo [stroke="#fff"] {
+	stroke: var(--primary-bg-color);
+}
+
+.dark-theme .landing .playtak-logo [stroke="#000"],
+.dark-theme .landing .playtak-logo [stroke="#020202"] {
+	stroke: var(--primary-font-color);
+}
+
+/* Loading animation: only the black outlines need lifting */
+.dark-theme .landing .loading [stroke="#000"] {
+	stroke: var(--primary-font-color);
+}
+
+/* USTA logo: colours live in style attributes, hence the !important */
+.dark-theme .landing .usta-logo-small [style*="stroke:#000000"] {
+	stroke: var(--primary-font-color) !important;
 }

@@ -346,6 +346,9 @@ function stopTime(){
 }
 
 function settimers(p1t,p2t,noHurry){
+	// Games start, end and are observed through this function, so it is also
+	// where the floating clocks find out whether they are needed.
+	updateMiniClocks();
 	$('.player1-time:first').html(formatTime(p1t));
 	$('.player2-time:first').html(formatTime(p2t));
 	if(p1t <= 10000 && !noHurry){

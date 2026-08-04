@@ -60,6 +60,16 @@ function disableLanding(){
 }
 
 /*
+ * Colour of the browser UI around the page, mostly visible on mobile
+ */
+function setThemeColorMeta(color){
+	const meta = document.querySelector('meta[name="theme-color"]');
+	if(meta){
+		meta.setAttribute('content', color);
+	}
+}
+
+/*
  * Notify checkbox change for checkbox:
  *	 Dark Mode
  */
@@ -70,6 +80,7 @@ function checkboxDarkMode(){
 		localStorage.setItem('theme','dark-theme');
 		// Add attribute to body
 		body.classList.add('dark-theme');
+		setThemeColorMeta('#191f25');
 		if(localStorage.getItem('clearcolor') === '#dddddd'){
 			localStorage.removeItem('clearcolor');
 			document.getElementById("clearcolorbox").value = boardDefaults.backgroundColor;
@@ -86,6 +97,7 @@ function checkboxDarkMode(){
 		localStorage.setItem('theme','light-theme');
 		body.classList.remove('dark-theme');
 		body.classList.add('light-theme');
+		setThemeColorMeta('#ffffff');
 	}
 }
 
